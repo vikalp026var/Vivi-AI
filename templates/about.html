@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViviAI</title>
+    <link rel="stylesheet" href="static/about.css">
+    <link rel="shortcut icon"  type="image/png" href="static/vivi.png"/>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" crossorigin="anonymous"> -->
+
+</head>
+<body>
+    <!-- nav section -->
+    <script src="script.js"></script>
+    <!-- navigation -->
+    <nav>
+        <div class="nav">
+            <img class="vivi_img" src="{{url_for('static',filename='vivi.png')}}" alt="ViviAI">
+            <div class="menu-toggle" id="mobile-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('research') }}">Research</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if session.get('user') %}
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>
+   <!-- 2nd section -->
+    <div class="main-block">
+        <div class="head-content">
+            <div class="main-head">
+                <h1>Revolutionizing Cancer Detection with AI</h1>
+            </div>
+            <div class="main-content">
+                <p>Vivi-AI's histopathology AI cancer detection technology is at the forefront of innovation, providing accurate and timely results to aid in the early detection and treatment of cancer. Our advanced algorithms analyze tissue samples with precision, offering a reliable solution for healthcare professionals and patients.</p>
+            </div>
+            <a class="box__link button-animation" href="{{ url_for('contact') }}">
+                Contact
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+        </div>
+    
+        <div class="main-img">
+            <img src="{{ url_for('static', filename='1st.jpg') }}" alt="about-image">
+        </div>
+        
+    </div>
+
+    <!-- min section -->
+     <div class="container">
+        <ul id="cards">
+            <li class="card" id="card1">
+                <div class="card-body">
+                    <h2>Our Mission</h2>
+                    <p>We aim to revolutionize healthcare by harnessing the power of AI to advance brain tumor diagnosis. Our mission is to provide innovative solutions that empower medical professionals with rapid, reliable, and accurate tools for analyzing histopathology images, ultimately improving patient outcomes.</p>
+                </div>
+            </li>
+            <li class="card" id="card2">
+                <div class="card-body">
+                    <h2>Our Vision</h2>
+                    <p>At Vivi-AI, our vision is to transform the future of healthcare by becoming a global leader in AI-driven medical diagnostics. We aspire to create a world where advanced technology enables early, precise, and life-saving interventions, ensuring that every patient has access to timely and accurate brain tumor diagnoses. By continually pushing the boundaries of AI, we aim to bridge the gap between cutting-edge research and real-world medical applications, revolutionizing care for brain cancer patients worldwide.</p>
+                </div>
+               
+            </li>
+            <li class="card" id="card3">
+                <div class="card-body">
+                    <h2>Our Values</h2>
+                    <p> Our values focus on innovation, integrity, and patient care. We are committed to developing cutting-edge AI solutions for brain tumor detection, ensuring ethical research and reliable outcomes. Our patient-first approach drives us to create tools that improve diagnosis and treatment, while collaboration with healthcare professionals allows us to make meaningful advancements in medical care.</p>
+                </div>
+                
+            </li>
+            <li class="card" id="card4">
+                <div class="card-body">
+                    <h2>Innovative Solutions</h2>
+                    <p>Vivi-AI develops AI-powered models that deliver fast and accurate brain tumor diagnoses from histopathology images. Our deep learning tools offer real-time diagnosis, enhanced visualization, and continuous learning to improve the future of healthcare for brain cancer patients.</p>
+                </div>
+            </li>
+        </ul>
+     </div>
+     <!-- collabroteour  -->
+      <div class="collabrate">
+            <div class="head">
+               <h1>Our Partners</h1>
+            </div>
+         
+        <div class="collabour-img">
+            <img src="{{ url_for('static', filename='starlabcpital_logo.png') }}" alt="starlab" class="collabour-img1">
+            <img src="{{ url_for('static', filename='ViviBiologics_logo.png') }}" alt="ViviBilogics"class="collabour-img2">
+            <img src="{{ url_for('static', filename='cloudnebulla_logo.png') }}" alt="Cloudnebullalogo"class="collabour-img3">
+        </div>
+        
+      </div>
+      <!-- footer section -->
+      <footer>
+        <div class="footer">
+            <p>Address</p>
+            <span class="copy">&copy; 2024 Vivi AI. All rights reserved.</span>
+        </div>
+    </footer>
+
+
+     
+</body>
+</html>

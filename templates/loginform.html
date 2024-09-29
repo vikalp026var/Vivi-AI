@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup</title>
+    <link rel="shortcut icon"  type="image/png" href="static/vivi.png"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='loginform.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<section class="container forms">
+    <div class="form login">
+        <div class="form-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="vivi_img_container">
+                <img class="vivi_img" src="{{url_for('static',filename='vivi.png')}}" alt="ViviAI">
+            </div>
+            
+            <header>Login</header>
+            <form action="{{ url_for('auth.login') }}" method="POST">
+                <div class="field input-field">
+                    <input type="email" placeholder="Email" class="input" name="username" required>
+                </div>
+
+                <div class="field input-field">
+                    <input type="password" placeholder="Password" class="password" name="password" required>
+                    <i class='bx bx-hide eye-icon'></i>
+                </div>
+
+                <div class="form-link">
+                    <a href="{{url_for('auth.forgot_password')}}" class="forgot-pass">Forgot password?</a>
+                </div>
+
+                <div class="field button-field">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+
+            <div class="form-link">
+                <span>Don't have an account? <a href="#" class="link signup-link">Signup</a></span>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- <div class="media-options">
+            <a href="#" class="field facebook">
+                <i class='bx bxl-facebook facebook-icon'></i>
+                <span>Login with Facebook</span>
+            </a>
+        </div> -->
+
+        <div class="media-options">
+            <a href="#" id="google-signin" class="field google">
+                <img src="{{ url_for('static', filename='google.png') }}" alt="" class="google-img">
+                <span>Login with Google</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Signup Form -->
+    
+    <div class="form signup">
+        <div class="vivi_img_container">
+            <img class="vivi_img" src="{{url_for('static',filename='vivi.png')}}" alt="ViviAI">
+        </div>
+        <div class="form-content">
+            <header>Signup</header>
+            <form action="{{ url_for('auth.signup') }}" method="POST">
+                <div class="field input-field">
+                    <input type="text" placeholder="Name" name="name" required>
+                </div>
+
+                <div class="field input-field">
+                    <input type="email" placeholder="Email" class="input" name="email" required>
+                </div>
+
+                <div class="field input-field">
+                    <input type="password" placeholder="Create password" class="password" name="password" required>
+                    <i class='bx bx-hide eye-icon'></i>
+                </div>
+
+                <div class="field button-field">
+                    <button type="submit">Signup</button>
+                </div>
+            </form>
+
+            <div class="form-link">
+                <span>Already have an account? <a href="#" class="link login-link">Login</a></span>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <!-- <div class="media-options">
+            <a href="#" class="field facebook">
+                <i class='bx bxl-facebook facebook-icon'></i>
+                <span>Login with Facebook</span>
+            </a>
+        </div> -->
+
+        <div class="media-options">
+            <a href="{{ url_for('auth.login_google') }}" id="google-signin" class="field google">
+                <img src="{{ url_for('static', filename='google.png') }}" alt="" class="google-img">
+                <span>Login with Google</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+const forms = document.querySelector(".forms"),
+      pwShowHide = document.querySelectorAll(".eye-icon"),
+      links = document.querySelectorAll(".link");
+
+pwShowHide.forEach(eyeIcon => {
+    eyeIcon.addEventListener("click", () => {
+        let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
+        
+        pwFields.forEach(password => {
+            if(password.type === "password"){
+                password.type = "text";
+                eyeIcon.classList.replace("bx-hide", "bx-show");
+                return;
+            }
+            password.type = "password";
+            eyeIcon.classList.replace("bx-show", "bx-hide");
+        })
+        
+    })
+})      
+
+links.forEach(link => {
+    link.addEventListener("click", e => {
+       e.preventDefault(); // Preventing form submit
+       forms.classList.toggle("show-signup");
+    })
+})
+
+document.getElementById('google-signin').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '{{ url_for("auth.login_google") }}';
+        });
+</script>
+</body>
+</html>

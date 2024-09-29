@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViviAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_research.css') }}">
+    <link rel="shortcut icon"  type="image/png" href="static/vivi.png"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+    <!-- navigation -->
+    <nav>
+       <div class="nav">
+          <img class="vivi_img" src="{{ url_for('static', filename='vivi.png') }}" alt="ViviAI">
+          <div class="menu-toggle" id="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <ul class="nav-links">
+             <li><a href="{{ url_for('index') }}">Home</a></li>
+             <li><a href="#">Research</a></li>
+             <li><a href="{{ url_for('about') }}">About</a></li>
+             <li><a href="{{ url_for('contact') }}">Contact</a></li>
+             <li><a href="{{url_for('auth.logout')}}">Logout</a></li>
+          </ul>
+       </div>
+    </nav>
+
+    <!-- Main Image Section -->
+    <section>
+        <div>
+            <a href="https://www.flaticon.com/free-icons/chatbot" title="chatbot icons">Chatbot icons created by juicy_fish - Flaticon</a>
+        </div>
+      <div class="main_img">
+          <img src="{{ url_for('static', filename='1st_his.jpg') }}" alt="Main Image">
+      </div>
+       <!-- Chatbot Section -->
+    <div class="chat-bar-open" id="chat-open">
+        <button id="chat-open-button" type="button" class="collapsible close" onclick="chatOpen()">
+            <img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot image" />
+        </button>
+    </div>
+
+    <div class="chat-bar-close" id="chat-close">
+        <button id="chat-close-button" type="button" class="collapsible close" onclick="chatClose()">
+            <i class="material-icons-outlined"></i>
+        </button>
+    </div>
+
+    <div class="chat-window" id="chat-window1">
+        <div class="hi-there">
+            <p class="p1">Hi There</p>
+            <br />
+            <p class="p2">Hello Ask Us Anything<br /></p>
+        </div>
+        <div class="start-conversation">
+            <h1>Start a Conversation</h1>
+            <br />
+            <p>ViviAI Team here ....</p>
+            <button class="new-conversation" type="button" onclick="openConversation()">
+                <span>New Conversation</span><i class="material-icons-outlined"> send </i>
+            </button>
+        </div>
+    </div>
+
+    <div class="chat-window2" id="chat-window2">
+        <div class="message-box" id="messageBox">
+            <div class="hi-there">
+                <p class="p1">Hi There</p>
+                <br />
+                <p class="p2">The team typically replies in few seconds.</p>
+            </div>
+        </div>
+        <div class="input-box">
+            <div class="surveysparrow">
+                <img src="{{ url_for('static', filename='chatbot.png') }}" />
+                <p>ViviAI</p>
+            </div>
+            <div class="write-reply">
+                <input class="inputText" type="text" id="textInput" placeholder="Write a reply..." />
+            </div>
+            <div class="send-button">
+                <button type="submit" class="send-message" id="send" onclick="userResponse()">
+                    <i class="material-icons-outlined"> send </i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </section>
+
+    <!-- Insights Section -->
+    <section>
+      <div class="container">
+         <h1>New Insights in Brain Histopathology</h1>
+         <p>Explore how uncovering new dimensions in brain histopathology is driving forward our knowledge of brain disorders, leading to more effective diagnostic and therapeutic solutions.</p>
+      </div>
+    </section>
+
+    <!-- Research Heading Section -->
+    <section class="head_top">
+      <div class="head">
+         <h1>Our Research</h1>
+      </div>
+    </section>
+
+    <!-- Glioblastoma Detection Section -->
+    <section>
+        <div class="research_head">
+            <h1>Glioblastoma Detection</h1>
+            <p>Machine Learning and Deep Learning Approaches for Classifying Brain Tumor Types</p>
+        </div>
+    </section>
+
+    <!-- File Upload Section -->
+    <!-- <section>
+        <div class="container">
+           <h1>New Insights in Brain Histopathology</h1>
+           <p>Explore how uncovering new dimensions in brain histopathology is driving forward our knowledge of brain disorders, leading to more effective diagnostic and therapeutic solutions.</p>
+        </div>
+      </section> -->
+  
+      <!-- Research Heading Section -->
+      <!-- <section class="head_top">
+        <div class="head">
+           <h1>Our Research</h1>
+        </div>
+      </section> -->
+  
+      <!-- Glioblastoma Detection Section -->
+      <!-- <section>
+          <div class="research_head">
+              <h1>Glioblastoma Detection</h1>
+              <p>Machine Learning Approch for Classifying Brain Tumor </p>
+          </div>
+      </section> -->
+  
+      <!-- File Upload Section -->
+      <section>
+        <div class="hero">
+            <form id="research-form" action="/research" method="post" enctype="multipart/form-data">
+                <label for="input-file" id="drop-area">
+                    <input type="file" accept="image/*" id="input-file" name="file" hidden>
+                    <div id="img-view">
+                        <img src="{{ url_for('static', filename='508-icon.png') }}" alt="Upload Icon">
+                        <p>Drag and drop or click here<br> to upload image</p>
+                        <span>Upload any image from desktop</span>
+                    </div>
+                </label>
+                <div id="overlay" class="overlay" style="display: none;">
+                    <div class="progress-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+                <div class="button_top">
+                    <button class="button" type="button" onclick="startProcess()">
+                        <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
+                        </svg>
+                        Predict
+                    </button>
+                </div>
+
+                <button style="display: inline-block; padding: 10px 20px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #4CAF50; border: none; border-radius: 5px;float: left;"><a href="{{url_for('graphs')}}" style="display: inline-block; margin-right: 10px; text-decoration: none;color: white;">View Graphs &#8599;</a></button>
+                <button type="button" onclick="clearSessionAndReload();" 
+                    style="display: inline-block; padding: 10px 20px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #4CAF50; border: none; border-radius: 5px;float: right;">
+                New Prediction
+            </button>
+            </form>
+            <div id="result" class="result">
+                Result : <span id="prediction-result">{{ result }}</span>
+                {% if result %}
+                <div>
+                    <a href="{{ url_for('Model1.download_report', result=result) }}" class="custom-file-upload" style="background: #ffc107; text-decoration: none;">Download Report</a>
+                </div>
+                {% endif %}
+            </div>
+            <!-- {% if session.plot_paths %} -->
+            
+        <!-- {% endif %} -->
+        </div>
+    </section>
+     <!-- <section>
+          <div class="research_head">
+              <h1>Glioblastoma Detection</h1>
+              <p>Machine Learning and Deep Learning Approaches for Classifying Brain Tumor Types</p>
+          </div>
+      </section> -->
+  
+      <!-- File Upload Section -->
+      <!-- <section>
+          <div class="hero">
+              <form action="/research" method="post" enctype="multipart/form-data">
+                  <label for="input-file" id="drop-area">
+                      <input type="file" accept="image/*" id="input-file" name="file" hidden>
+                      <div id="img-view">
+                          <img src="{{ url_for('static', filename='508-icon.png') }}" alt="Upload Icon">
+                          <p>Drag and drop or click here<br> to upload image</p>
+                          <span>Upload any image from desktop</span>
+                      </div>
+                  </label>
+                  <div id="overlay" class="overlay">
+                      <div class="progress-container">
+                          <div id="progress-bar" class="progress-bar"></div>
+                      </div>
+                  </div>
+                  <div class="button_top">
+                      <button class="button" type="button" onclick="startProcess()">
+                          <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
+                          </svg>
+                          Predict
+                      </button>
+                  </div>
+                 
+              </form>
+              <div id="result" class="result">
+                
+                  Result is :{{ result }}
+                  <div><a href="{{ url_for('Model2.download_report', result=result) }}" class="custom-file-upload" style="background: #ffc107; text-decoration: none;">Download Report</a></div>
+                  
+              </div>
+              
+          </div>
+          
+      </section> -->
+
+
+    <!-- Footer Section -->
+    <section>
+
+        <div class="footer">
+            <p>Address</p>
+            <span class="copy">&copy; 2024 Vivi AI. All rights reserved.</span>
+        </div>
+    </section>
+
+    <script>
+        
+        const dropArea = document.getElementById("drop-area");
+        const inputFile = document.getElementById("input-file");
+        const imgView = document.getElementById("img-view");
+
+        inputFile.addEventListener("change", uploadImage);
+
+        function uploadImage() {
+            const file = inputFile.files[0];
+            if (file) {
+                const imgLink = URL.createObjectURL(file);
+                imgView.style.backgroundImage = `url(${imgLink})`;
+                imgView.style.backgroundSize = 'cover'; // Ensure the image covers the container
+                imgView.style.backgroundPosition = 'center'; // Center the background image
+                imgView.style.width = '200px'; // Set width of the container
+                imgView.style.height = '200px'; // Set height of the container
+                imgView.style.padding = '0'; // Remove padding
+                imgView.textContent = ""; // Clear any text content
+                imgView.style.border = 'none'; // Remove border
+                // Optional: Remove the image URL from memory after usage
+                setTimeout(() => URL.revokeObjectURL(imgLink), 1000);
+            } else {
+                console.error("No file selected or file not available.");
+            }
+        }
+
+        dropArea.addEventListener("dragover", function(e) {
+            e.preventDefault();
+        });
+
+        dropArea.addEventListener("drop", function(e) {
+            e.preventDefault();
+            inputFile.files = e.dataTransfer.files;
+            uploadImage();
+        });
+
+        async function startProcess() {
+    const overlay = document.getElementById('overlay');
+    const progressBar = document.getElementById('progress-bar');
+    const resultDiv = document.querySelector('.result');
+    const form = document.querySelector('form');
+
+    overlay.style.display = 'flex';
+    resultDiv.style.display = 'none';
+    progressBar.style.width = '0%';
+    progressBar.textContent = '0%';
+
+    try {
+        // Start simulating progress immediately
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += 5; // Increase by 5% each time
+            if (progress > 90) progress = 90; // Cap at 90% until we get the real result
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = progress + '%';
+        }, 500);
+
+        // Submit the form data
+        const formData = new FormData(form);
+        const response = await fetch('/research', {
+            method: 'POST',
+            body: formData
+        });
+
+        const html = await response.text();
+
+        // Parse the HTML to extract the result
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newResultDiv = doc.querySelector('.result');
+
+        // Once we have the result, complete the progress bar
+        clearInterval(progressInterval);
+        progressBar.style.width = '100%';
+        progressBar.textContent = '100%';
+
+        // Hide the overlay and show result
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            if (newResultDiv) {
+                resultDiv.innerHTML = newResultDiv.innerHTML;
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.innerHTML = "No result found";
+                resultDiv.style.display = 'block';
+            }
+        }, 500);
+
+    } catch (error) {
+        console.error('Error during process:', error);
+        overlay.style.display = 'none';
+        resultDiv.innerHTML = "An error occurred during processing.";
+        resultDiv.style.display = 'block';
+    }
+}
+
+
+$(document).ready(function() {
+            let audio1 = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/clickUp.mp3");
+
+            function logToServer(message) {
+                $.ajax({
+                    url: "{{ url_for('chatbot.chat') }}",
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ message: message }),
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error logging to server:", textStatus, errorThrown);
+                    }
+                });
+            }
+
+            window.chatOpen = function() {
+                $("#chat-open").hide();
+                $("#chat-close, #chat-window1").show();
+                audio1.load();
+                audio1.play();
+                logToServer("Chat opened");
+            }
+
+            window.chatClose = function() {
+                $("#chat-open").show();
+                $("#chat-close, #chat-window1, #chat-window2").hide();
+                audio1.load();
+                audio1.play();
+                logToServer("Chat closed");
+            }
+
+            window.openConversation = function() {
+                $("#chat-window2").show();
+                $("#chat-window1").hide();
+                audio1.load();
+                audio1.play();
+                logToServer("Conversation opened");
+            }
+
+            window.userResponse = function() {
+                let userText = $("#textInput").val().trim();
+
+                if (userText === "") {
+                    alert("Please type something!");
+                    return;
+                }
+
+                logToServer("User sent message: " + userText);
+
+                $("#messageBox").append(`
+                    <div class="first-chat">
+                        <p>${userText}</p>
+                        <div class="arrow"></div>
+                    </div>`);
+
+                let audio3 = new Audio("https://prodigits.co.uk/content/ringtones/tone/2020/alert/preview/4331e9c25345461.mp3");
+                audio3.load();
+                audio3.play();
+
+                $("#textInput").val("");
+                $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
+
+                $.ajax({
+                    url: "{{ url_for('chatbot.chat') }}",
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ msg: userText }),
+                    success: function(response) {
+                        if (response && response.response) {
+                            $("#messageBox").append(`
+                                <div class="second-chat">
+                                    <div class="circle" id="circle-mar"></div>
+                                    <p>${response.response}</p>
+                                    <div class="arrow"></div>
+                                </div>`);
+                            logToServer("Bot responded: " + response.response);
+                            
+                            let responseAudio = new Audio("https://downloadwap.com/content2/mp3-ringtones/tone/2020/alert/preview/56de9c2d5169679.mp3");
+                            responseAudio.load();
+                            responseAudio.play();
+                        } else {
+                            console.error("Invalid response format:", response);
+                            displayErrorMessage("Received an invalid response from the server.");
+                            logToServer("Error: Invalid response format");
+                        }
+
+                        $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX Error:", textStatus, errorThrown);
+                        displayErrorMessage("An error occurred while communicating with the server.");
+                        logToServer("Error: AJAX error - " + textStatus);
+                    }
+                });
+            }
+
+            function displayErrorMessage(message) {
+                $("#messageBox").append(`
+                    <div class="second-chat">
+                        <div class="circle" id="circle-mar"></div>
+                        <p>${message}</p>
+                        <div class="arrow"></div>
+                    </div>`);
+                
+                let errorAudio = new Audio("https://downloadwap.com/content2/mp3-ringtones/tone/2020/alert/preview/56de9c2d5169679.mp3");
+                errorAudio.load();
+                errorAudio.play();
+            }
+
+            $("#textInput").on("keypress", function(event) {
+                if (event.key === "Enter") {
+                    userResponse();
+                }
+            });
+        });
+        function clearSessionAndReload() {
+    fetch('/reset', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload(); // Reload the page after session is cleared
+        } else {
+            console.error('Error clearing session');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+       
+    </script>
+</body>
+</html>

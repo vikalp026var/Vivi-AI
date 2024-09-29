@@ -1,0 +1,36 @@
+# Ignore environment files
+.env
+
+# Ignore GitHub workflows and actions (if not necessary to track)
+.github/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Docker ignore file (optional, if you don't want to track it)
+.dockerignore
+
+# Ignore yobo and yogo folders and their variants
+yobo/
+yobo
+yobo**
+yogo/
+yogo
+yogo**
+
+# Ignore node_modules (if it's a Node.js project)
+node_modules/
+
+# Ignore Python virtual environments (if using Python)
+venv/
+__pycache__/
+
+# Ignore compiled code and logs
+*.log
+*.pyc
+*.pyo
+*.class
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

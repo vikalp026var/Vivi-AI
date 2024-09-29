@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViviAI</title>
+    <link rel="shortcut icon"  type="image/png" href="static/vivi.png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav">
+            <img class="vivi_img" src="{{ url_for('static', filename='vivi.png') }}" alt="ViviAI">
+            <div class="menu-toggle" id="mobile-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('research') }}">Research</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+               
+            {% if session.get('user') %}
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <section>
+        <div>
+            <a href="https://www.flaticon.com/free-icons/chatbot" title="chatbot icons">Chatbot icons created by juicy_fish - Flaticon</a>
+        </div>
+        <div class="main_img">
+            <img src="{{ url_for('static', filename='new_latest.jpg') }}" alt="Latest">
+            <div class="content">
+                <h1>AI Revolution</h1>
+                <p>Transforming Histopathology with Cutting-Edge AI Predictions!</p>
+                <button><a href="{{ url_for('research') }}" style="color: #e1bee7; text-decoration: none;">Explore Now</a></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Analysis Section -->
+    <section>
+        <div class="content2">
+            <div class="content_text">
+                <h1>Image Analysis</h1>
+                <p>Analysis of Histopathology Images</p>
+            </div>
+            <div class="img">
+                <img src="{{ url_for('static', filename='2nd_his.jpg') }}" alt="Image Analysis">
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <div class="chat-bar-open" id="chat-open">
+        <button id="chat-open-button" type="button" class="collapsible close" onclick="chatOpen()">
+            <img src="{{ url_for('static', filename='chatbot.png') }}" alt="Chatbot image" />
+        </button>
+    </div>
+
+    <div class="chat-bar-close" id="chat-close">
+        <button id="chat-close-button" type="button" class="collapsible close" onclick="chatClose()">
+            <i class="material-icons-outlined"></i>
+        </button>
+    </div>
+
+    <div class="chat-window" id="chat-window1">
+        <div class="hi-there">
+            <p class="p1">Hi There</p>
+            <br />
+            <p class="p2">Hello Ask Us Anything<br /></p>
+        </div>
+        <div class="start-conversation">
+            <h1>Start a Conversation</h1>
+            <br />
+            <p>ViviAI Team here ....</p>
+            <button class="new-conversation" type="button" onclick="openConversation()">
+                <span>New Conversation</span><i class="material-icons-outlined"> send </i>
+            </button>
+        </div>
+    </div>
+
+    <div class="chat-window2" id="chat-window2">
+        <div class="message-box" id="messageBox">
+            <div class="hi-there">
+                <p class="p1">Hi There</p>
+                <br />
+                <p class="p2">The team typically replies in few minutes.</p>
+            </div>
+        </div>
+        <div class="input-box">
+            <div class="surveysparrow">
+                <img src="{{ url_for('static', filename='chatbot.png') }}" />
+                <p>ViviAI</p>
+            </div>
+            <div class="write-reply">
+                <input class="inputText" type="text" id="textInput" placeholder="Write a reply..." />
+            </div>
+            <div class="send-button">
+                <button type="submit" class="send-message" id="send" onclick="userResponse()">
+                    <i class="material-icons-outlined"> send </i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section>
+        <div class="content3">
+            <div class="box1">
+                <h2>Predictive Power</h2>
+                <p>Leverage advanced algorithms for accurate predictions.</p>
+            </div>
+            <div class="box2">
+                <h2>Data Security</h2>
+                <p>Ensure your data is secure and protected.</p>
+            </div>
+            <div class="box3">
+                <h2>Rapid Results</h2>
+                <p>Receive results quickly and efficiently.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <!-- <section>
+        <div class="container">
+            <div class="text1">
+                <h1>98.32%</h1>
+                <p>Accuracy Achieved</p>
+            </div>
+            <div class="text2">
+                <h1>200+</h1>
+                <p>Images Analyzed</p>
+            </div>
+            <div class="text3">
+                <h1>3 Months</h1>
+                <p>Of Research</p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Join Us Section -->
+    <section class="container_join">
+        <div class="text">
+            <h1>Join Our Research Revolution</h1>
+        </div>
+        <div class="icons-wrapper">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="ri-instagram-line icon"></i></a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="ri-facebook-circle-line icon"></i></a>
+            <a href="https://wa.me/" target="_blank" rel="noopener noreferrer"><i class="ri-whatsapp-line icon"></i></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer">
+            <p>Address</p>
+            <span class="copy">&copy; 2024 Vivi AI. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        let audio1 = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/clickUp.mp3");
+
+        function logToServer(message) {
+            $.ajax({
+                url: "{{ url_for('chatbot.chat') }}",
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ message: message }),
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error logging to server:", textStatus, errorThrown);
+                }
+            });
+        }
+
+        function chatOpen() {
+            document.getElementById("chat-open").style.display = "none";
+            document.getElementById("chat-close").style.display = "block";
+            document.getElementById("chat-window1").style.display = "block";
+            audio1.load();
+            audio1.play();
+            logToServer("Chat opened");
+        }
+
+        function chatClose() {
+            document.getElementById("chat-open").style.display = "block";
+            document.getElementById("chat-close").style.display = "none";
+            document.getElementById("chat-window1").style.display = "none";
+            document.getElementById("chat-window2").style.display = "none";
+            audio1.load();
+            audio1.play();
+            logToServer("Chat closed");
+        }
+
+        function openConversation() {
+            document.getElementById("chat-window2").style.display = "block";
+            document.getElementById("chat-window1").style.display = "none";
+            audio1.load();
+            audio1.play();
+            logToServer("Conversation opened");
+        }
+
+        function userResponse() {
+            let userText = document.getElementById("textInput").value.trim();
+
+            if (userText === "") {
+                alert("Please type something!");
+                return;
+            }
+
+            logToServer("User sent message: " + userText);
+
+            document.getElementById("messageBox").innerHTML += `
+                <div class="first-chat">
+                    <p>${userText}</p>
+                    <div class="arrow"></div>
+                </div>`;
+            let audio3 = new Audio(
+                "https://prodigits.co.uk/content/ringtones/tone/2020/alert/preview/4331e9c25345461.mp3"
+            );
+            audio3.load();
+            audio3.play();
+
+            document.getElementById("textInput").value = "";
+            var objDiv = document.getElementById("messageBox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+
+            $.ajax({
+                url: "{{ url_for('chatbot.chat') }}",
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ msg: userText }),
+                success: function(response) {
+                    if (response && response.response) {
+                        document.getElementById("messageBox").innerHTML += `
+                            <div class="second-chat">
+                                <div class="circle" id="circle-mar"></div>
+                                <p>${response.response}</p>
+                                <div class="arrow"></div>
+                            </div>`;
+                        logToServer("Bot responded: " + response.response);
+                        
+                        // Play sound when LLM response is received
+                        let responseAudio = new Audio("https://downloadwap.com/content2/mp3-ringtones/tone/2020/alert/preview/56de9c2d5169679.mp3");
+                        responseAudio.load();
+                        responseAudio.play();
+                    } else {
+                        console.error("Invalid response format:", response);
+                        displayErrorMessage("Received an invalid response from the server.");
+                        logToServer("Error: Invalid response format");
+                    }
+
+                    var objDiv = document.getElementById("messageBox");
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                    displayErrorMessage("An error occurred while communicating with the server.");
+                    logToServer("Error: AJAX error - " + textStatus);
+                }
+            });
+        }
+
+        function displayErrorMessage(message) {
+            document.getElementById("messageBox").innerHTML += `
+                <div class="second-chat">
+                    <div class="circle" id="circle-mar"></div>
+                    <p>${message}</p>
+                    <div class="arrow"></div>
+                </div>`;
+            
+            let errorAudio = new Audio(
+                "https://downloadwap.com/content2/mp3-ringtones/tone/2020/alert/preview/56de9c2d5169679.mp3"
+            );
+            errorAudio.load();
+            errorAudio.play();
+        }
+
+        document.getElementById("textInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                userResponse();
+            }
+        });
+    </script>
+</body>
+</html>

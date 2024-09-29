@@ -1,0 +1,194 @@
+columns:
+  filename: str
+  fractal_dimension: float 
+  entropy: float 
+  lacunarity: float 
+  Contrast1: float 
+  Dissimilarity1: float 
+  Homogeneity1: float 
+  Asm1: float 
+  Energy1: float 
+  Correlation1: float 
+  Contrast3: float
+  Dissimilarity3: float
+  Homogeneity3: float
+  Asm3: float
+  Energy3: float
+  Correlation3: float
+  Contrast5: float
+  Dissimilarity5: float
+  Homogeneity5: float
+  Asm5: float
+  Energy5: float
+  Correlation5: float
+  Contrast_0: float
+  Dissimilarity_0: float
+  Homogeneity_0: float
+  Asm_0: float
+  Energy_0: float
+  Correlation_0: float
+  Contrast_45: float
+  Dissimilarity_45: float
+  Homogeneity_45: float
+  Asm_45: float
+  Energy_45: float
+  Correlation_45: float
+  Contrast_90: float
+  Dissimilarity_90: float
+  Homogeneity_90: float
+  Asm_90: float
+  Energy_90: float
+  Correlation_90: float
+  SRE: float
+  LRE: float
+  GLU: float
+  RLU: float
+  RPC: float
+  label: category
+
+
+
+numerical_columns:
+ - fractal_dimension
+ - entropy
+ - lacunarity 
+ - Contrast1 
+ - Dissimilarity1 
+ - Homogeneity1 
+ - Asm1 
+ - Energy1 
+ - Correlation1 
+ - Contrast3
+ - Dissimilarity3
+ - Homogeneity3
+ - Asm3
+ - Energy3
+ - Correlation3
+ - Contrast5
+ - Dissimilarity5
+ - Homogeneity5
+ - Asm5
+ - Energy5
+ - Correlation5
+ - Contrast_0
+ - Dissimilarity_0
+ - Homogeneity_0
+ - Asm_0
+ - Energy_0
+ - Correlation_0
+ - Contrast_45
+ - Dissimilarity_45
+ - Homogeneity_45
+ - Asm_45
+ - Energy_45
+ - Correlation_45
+ - Contrast_90
+ - Dissimilarity_90
+ - Homogeneity_90
+ - Asm_90
+ - Energy_90
+ - Correlation_90
+ - SRE
+ - LRE
+ - GLU
+ - RLU
+ - RPC
+  
+categorical_column:
+ - filename
+
+
+Standard_columns:
+ - fractal_dimension
+ - entropy
+ - lacunarity 
+ - Contrast3
+ - Dissimilarity3
+ - Homogeneity3
+ - Asm3
+ - Energy3
+ - Correlation3
+ - Contrast5
+ - Dissimilarity5
+ - Homogeneity5
+ - Asm5
+ - Energy5
+ - Correlation5
+ - Contrast_0
+ - Dissimilarity_0
+ - Homogeneity_0
+ - Asm_0
+ - Energy_0
+ - Correlation_0
+ - Contrast_45
+ - Dissimilarity_45
+ - Homogeneity_45
+ - Asm_45
+ - Energy_45
+ - Correlation_45
+ - Contrast_90
+ - Dissimilarity_90
+ - Homogeneity_90
+ - Asm_90
+ - Energy_90
+ - Correlation_90
+ - SRE
+ - LRE
+ - GLU
+ - RLU
+ - RPC
+
+Categorical_columns:
+ - filename
+
+
+Transformation_columns:
+ - fractal_dimension
+ - entropy
+ - lacunarity
+ - Contrast3
+ - Dissimilarity3
+ - Homogeneity3
+ - Asm3
+ - Energy3
+ - Correlation3
+ - Contrast5
+ - Dissimilarity5
+ - Homogeneity5
+ - Asm5
+ - Energy5
+ - Correlation5
+ - Contrast_0
+ - Dissimilarity_0
+ - Homogeneity_0
+ - Asm_0
+ - Energy_0
+ - Correlation_0
+ - Contrast_45
+ - Dissimilarity_45
+ - Homogeneity_45
+ - Asm_45
+ - Energy_45
+ - Correlation_45
+ - Contrast_90
+ - Dissimilarity_90
+ - Homogeneity_90
+ - Asm_90
+ - Energy_90
+ - Correlation_90
+ - SRE
+ - LRE
+ - GLU
+ - RLU
+ - RPC
+
+Drop_columns:
+ - Energy1
+ - Correlation1
+ - Dissimilarity1
+ - Homogeneity1
+ - Asm1
+ - Contrast1
+ - filename
+ 
+Target_column: label
