@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancer Prediction Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dl_model.css') }}">
+</head>
+<body>
+    <div class="hero">
+        <h1>Cancer Prediction Model</h1>
+        <div class="upload-section">
+            <form id="uploadForm" method="post" enctype="multipart/form-data" action="/dlmodel">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" name="file" accept="image/*" hidden>
+                    <div class="upload-content" id="uploadContent">
+                        <img src="{{ url_for('static', filename='508-icon.png') }}" alt="Upload Icon" id="uploadIcon">
+                        <p>Drag and drop or click here to upload image</p>
+                        <span>Supported formats: JPG, PNG, JPEG</span>
+                    </div>
+                    <img id="previewImage" class="preview-image" alt="Preview" style="display: none;">
+                </div>
+                
+                <div class="file-info" id="fileInfo"></div>
+                <div class="progress-bar-container" id="progressBar">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-primary" id="predictBtn" disabled>Predict</button>
+                    <button type="button" class="btn btn-secondary" id="resetBtn">Reset</button>
+                </div>
+                <div id="resultSection" class="result-section">
+                    <div class="result-card">
+                        <h3>Prediction Result</h3>
+                        <p id="predictionResult"></p>
+                        <div>
+                            <a href="{{ url_for('Model2.download_report_model2', result=result) }}" class="custom-file-upload" style="background: #ffc107; text-decoration: none; display: inline-block; width: 200px; height: 50px; border-radius: 10px; text-align: center; line-height: 50px;color: white;">Download Report</a>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const uploadContent = document.getElementById('uploadContent');
+        const predictBtn = document.getElementById('predictBtn');
+        const progressBar = document.querySelector('.progress-bar');
+        const progressBarContainer = document.getElementById('progressBar');
+        const errorMessage = document.getElementById('errorMessage');
+        const fileInfo = document.getElementById('fileInfo');
+        const resultSection = document.getElementById('resultSection');
+        const predictionResult = document.getElementById('predictionResult');
+        const featureGrid = document.getElementById('featureGrid');
+        const graphsContainer = document.getElementById('graphsContainer');
+        const viewGraphsBtn = document.getElementById('viewGraphsBtn');
+
+        // Handle file selection and preview
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) handleFileSelection(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFileSelection(file);
+        });
+
+        function handleFileSelection(file) {
+            const validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+            const maxFileSize = 5 * 1024 * 1024;
+
+            if (!validExtensions.includes(file.type)) {
+                showError('Unsupported file format. Please upload a JPG or PNG image.');
+                return;
+            }
+
+            if (file.size > maxFileSize) {
+                showError('File size exceeds 5MB. Please upload a smaller file.');
+                return;
+            }
+
+            fileInfo.textContent = `Selected file: ${file.name}`;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                uploadContent.style.display = 'none';
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+                predictBtn.disabled = false;
+                errorMessage.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        predictBtn.addEventListener('click', () => {
+            const formData = new FormData(document.getElementById('uploadForm'));
+
+            progressBar.style.width = '0%';
+            progressBarContainer.style.display = 'block';
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 10;
+                    progressBar.style.width = `${progress}%`;
+                }
+            }, 500);
+
+            fetch('/dlmodel', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+
+                predictionResult.textContent = `Prediction: ${data.result}`;
+                resultSection.style.display = 'block';
+                viewGraphsBtn.style.display = 'flex';
+
+                // Hide the analysis container until View Graphs is clicked
+                document.querySelector('.analysis-container').style.display = 'none';
+            })
+            .catch(error => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '0%';
+                // showError('An error occurred during the prediction. Please try again.');
+                console.error('Prediction error:', error);
+            });
+        });
+
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            fetch('/reset', { method: 'POST' })
+                .then(() => {
+                    // Reset UI elements
+                    document.getElementById('uploadForm').reset();
+                    previewImage.style.display = 'none';
+                    uploadContent.style.display = 'block';
+                    progressBar.style.width = '0%';
+                    progressBarContainer.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                    predictBtn.disabled = true;
+                    fileInfo.textContent = '';
+                    resultSection.style.display = 'none';
+                    viewGraphsBtn.style.display = 'none';
+                    document.querySelector('.analysis-container').style.display = 'none';
+                    featureGrid.innerHTML = '';
+                    graphsContainer.innerHTML = '';
+                })
+                .catch(error => {
+                    console.error('Reset error:', error);
+                    showError('Error resetting the form. Please refresh the page.');
+                });
+        });
+    </script>
+</body>
+</html>
